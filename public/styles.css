@@ -1,0 +1,11 @@
+body{
+    margin: 20px;
+}
+
+.chats {
+    background-color: aliceblue;
+}
+.message {
+    background-color: lightblue;
+    display: inline-block;
+}
