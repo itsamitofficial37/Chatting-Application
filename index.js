@@ -63,24 +63,37 @@ app.post("/chats", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-    res.redirect("/chats");
+  res.redirect("/chats");
 });
 
 // Update routes
 
-app.get("/chats/:id/edit", async(req,res)=> {
-  let {id} = req.params;
+app.get("/chats/:id/edit", async (req, res) => {
+  let { id } = req.params;
   let chats = await Chat.findById(id);
-  res.render("update.ejs",{chats});
+  res.render("update.ejs", { chats });
 });
 
-app.put("/chats/:id", async (req,res) => {
-  let {id} = req.params;
-  let{message: newMsg} = req.body;
-  let updatedChat = await Chat.findByIdAndUpdate(id ,{message : newMsg} , {runvalidators : true, new : true});
+app.put("/chats/:id", async (req, res) => {
+  let { id } = req.params;
+  let { message: newMsg } = req.body;
+  let updatedChat = await Chat.findByIdAndUpdate(
+    id,
+    { message: newMsg },
+    { runvalidators: true, new: true }
+  );
+  console.log(updatedChat);
   res.redirect("/chats");
-})
+});
 
+// Delete Routes
+
+app.delete("/chats/:id",async (req,res)=> {
+  let {id} = req.params;
+  let deleteChat =  await Chat.findByIdAndDelete(id);
+  res.redirect("/chats");
+
+})
 
 app.listen(3000, () => {
   console.log("app is listening on port no. 3000");
